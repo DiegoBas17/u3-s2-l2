@@ -44,9 +44,7 @@ const BookList = ({ libriDaVisualizzare }) => {
           </Row>
         </Col>
         <Col md="4">
-          {this.state.idLibroSelezionato && (
-            <CommentArea idLibro={idLibroSelezionato} />
-          )}
+          {idLibroSelezionato && <CommentArea idLibro={idLibroSelezionato} />}
         </Col>
       </Row>
     </Container>
