@@ -1,17 +1,17 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import CommentsList from "./CommentsList";
 import AddComment from "./AddComment";
 import StickyBox from "react-sticky-box";
 
-class CommentArea extends Component {
-  state = {
+const CommentArea = (props) => {
+  /*  state = {
     commenti: [],
-  };
+  }; */
+  const [commenti, setCommenti] = useState([]);
 
-  fetchComments = () => {
+  const fetchComments = () => {
     fetch(
-      "https://striveschool-api.herokuapp.com/api/comments/" +
-        this.props.idLibro,
+      "https://striveschool-api.herokuapp.com/api/comments/" + props.idLibro,
       {
         headers: {
           Authorization:
@@ -28,33 +28,34 @@ class CommentArea extends Component {
       })
       .then((arrayComment) => {
         console.log(arrayComment);
-        this.setState({ commenti: arrayComment });
+        setCommenti(arrayComment);
       })
       .catch((err) => alert(err));
   };
-  componentDidMount() {
+
+  /* componentDidMount() {
     this.fetchComments();
-  }
-  componentDidUpdate(prevProps) {
+  } */
+  useEffect(() => {
+    fetchComments();
+  }, [props.idLibro]);
+
+  /*   componentDidUpdate(prevProps) {
     if (prevProps.idLibro !== this.props.idLibro) {
       this.fetchComments();
     }
-  }
-  render() {
-    return (
-      <StickyBox offsetTop={20} offsetBottom={20}>
-        <AddComment
-          idLibro={this.props.idLibro}
-          updateFetch={this.fetchComments}
-        />
-        <CommentsList
-          arrayCommenti={this.state.commenti}
-          idLibro={this.props.idLibro}
-          updateFetch={this.fetchComments}
-        />
-      </StickyBox>
-    );
-  }
-}
+  } */
+
+  return (
+    <StickyBox offsetTop={20} offsetBottom={20}>
+      <AddComment idLibro={props.idLibro} updateFetch={fetchComments} />
+      <CommentsList
+        arrayCommenti={commenti}
+        idLibro={props.idLibro}
+        updateFetch={fetchComments}
+      />
+    </StickyBox>
+  );
+};
 
 export default CommentArea;
