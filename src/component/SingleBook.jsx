@@ -15,7 +15,9 @@ const SingleBook = (props) => {
       }}
     >
       <Card.Img
+        /* className={props.isSelected ? "cardSelezionata" : ""} */
         variant="top"
+        data-testid="cardImg"
         src={props.libro.img}
         onClick={() => props.cardSelezionata(props.libro.asin)}
         style={{ width: "100%", height: "400px", objectFit: "fill" }}

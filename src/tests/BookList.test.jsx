@@ -18,7 +18,7 @@ describe("BookList", () => {
     const card = await screen.findAllByRole("card");
     expect(card).toHaveLength(2);
   }); */
-  it("returns 2 elements if 'id' is typed in the input field", async () => {
+  it("returns 10 elements if 'id' is typed in the input field", async () => {
     render(<BookList libriDaVisualizzare={fantasy} />);
     const inputField = screen.getByPlaceholderText(/cerca/i);
     const user = userEvent.setup();
@@ -28,14 +28,17 @@ describe("BookList", () => {
   });
   it("la carta selezionata ha il bordo rosso", async () => {
     render(<BookList libriDaVisualizzare={fantasy} />);
-    const arrayLibri = await screen.findAllByRole("card");
-    fireEvent.click(arrayLibri[0]);
+    const arrayImg = await screen.findAllByTestId("cardImg");
+    const firstImg = arrayImg[0];
+    const firstCard =
+      firstImg.closest(".card"); /* cosi risalgo al padre con questa classe */
+    fireEvent.click(firstImg);
 
-    expect(arrayLibri[0]).toHaveClass("cardSelezionata");
+    expect(firstCard).toHaveClass("cardSelezionata");
   });
-  /* it("la seconda carta selezionata ha il bordo rosso", async () => {
+  /*  it("la seconda carta selezionata ha il bordo rosso", async () => {
     render(<BookList libriDaVisualizzare={fantasy} />);
-    const arrayLibri = await screen.findAllByRole("card");
+    const arrayLibri = await screen.findAllByTestId("cardImg");
     fireEvent.click(arrayLibri[1]);
     expect(arrayLibri[1]).toHaveClass("cardSelezionata");
     expect(arrayLibri[0]).not.toHaveClass("cardSelezionata");
