@@ -27,15 +27,7 @@ const AddComment = (props) => {
   const fetchNewComment = (e) => {
     e.preventDefault();
 
-    /* Aggiorno lo stato del commento con createdAt e poi esegue la fetch */
-    /*  Questo è importante perché setState è asincrono, il che significa che l'aggiornamento dello stato potrebbe non avvenire immediatamente. */
-    /* this.setState(
-      (prevState) => ({
-        comment: { ...prevState.comment, createdAt: new Date()},
-      }), */
     handleFieldChange("createdAt", new Date());
-    /* () => { */
-    /* Questa funzione verrà eseguita solo dopo che lo stato è stato aggiornato */
     fetch("https://striveschool-api.herokuapp.com/api/comments/", {
       method: "POST",
       body: JSON.stringify(comment),
@@ -47,14 +39,6 @@ const AddComment = (props) => {
     })
       .then((resp) => {
         if (resp.ok) {
-          /* this.setState({
-                comment: {
-                  author: "",
-                  comment: "",
-                  rate: 1,
-                  elementId: this.props.idLibro,
-                },
-              }); */
           handleFieldChange("elementId", props.idLibro);
           document.getElementById("rate-select").value =
             "0"; /* con questo resetto il campo alla opzione 0 */
@@ -66,16 +50,7 @@ const AddComment = (props) => {
       })
       .catch((err) => alert(err));
   };
-  /* ); */
 
-  /* componentDidUpdate(prevProps) { */
-  /* Se il nuovo idLibro è diverso dal precedente, aggiorno lo stato, questo devo farlo poiche ho riscontranto un ritardo nell'aggiornamento dell'aggiornamento del elementId */
-  /*   if (prevProps.idLibro !== this.props.idLibro) {
-      this.setState({
-        comment: { ...this.state.comment, elementId: this.props.idLibro },
-      });
-    }
-  } */
   useEffect(() => {
     handleFieldChange("elementId", props.idLibro);
   }, []);
@@ -86,23 +61,13 @@ const AddComment = (props) => {
         type="text"
         placeholder="Aggiuingi un commento"
         value={comment.comment}
-        onChange={(e) =>
-          /* this.setState({
-              comment: { ...this.state.comment, comment: e.target.value },
-            }) */
-          handleFieldChange("comment", e.target.value)
-        }
+        onChange={(e) => handleFieldChange("comment", e.target.value)}
         required
       />
       <Form.Select
         id="rate-select"
         aria-label="Number of seats"
-        onChange={(e) =>
-          /* this.setState({
-              comment: { ...this.state.comment, rate: e.target.value },
-            }) */
-          handleFieldChange("rate", e.target.value)
-        }
+        onChange={(e) => handleFieldChange("rate", e.target.value)}
       >
         <option value="0">Voto da 1 a 5</option>{" "}
         {/* dovrei aggiungere il fatto di resettare il valore di questo select una volta inviato il commento */}
