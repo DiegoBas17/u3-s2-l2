@@ -4,6 +4,8 @@ import { Button, Card } from "react-bootstrap";
 const SingleBook = (props) => {
   return (
     <Card
+      className={props.isSelected ? "cardSelezionata" : ""}
+      role="card"
       style={{
         border: props.isSelected ? "5px solid red" : "5px solid lightgrey",
         height: "600px",
